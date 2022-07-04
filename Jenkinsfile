@@ -20,6 +20,17 @@ pipeline {
           
         }
 
+        stage('StartTomcat') {
+            steps {
+               bat '''c:
+                    cd D:\\apache-tomcat-8.0.53\\apache-tomcat-8.0.53\\bin
+                    set JAVA_HOME=C:\\Program Files\\Java\\jdk1.8.0_221
+                    startup.bat'''
+            }
+
+          
+        
+
          stage('Deploy') {
             steps {
                deploy adapters: [tomcat8(credentialsId: 'tomcat-credential', path: '', url: 'http://localhost:9999/')], contextPath: null, onFailure: false, war: '**/*.war'
